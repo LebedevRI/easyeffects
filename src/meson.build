@@ -62,7 +62,10 @@ pulseeffects_sources = [
 	'delay.cpp',
 	'delay_ui.cpp',
 	'delay_preset.cpp',
-	'rnnoise.cpp',
+        'deambiencer.cpp',
+        'deambiencer_ui.cpp',
+        'deambiencer_preset.cpp',
+        'rnnoise.cpp',
 	'rnnoise_ui.cpp',
 	'presets_menu_ui.cpp',
 	'presets_manager.cpp',
@@ -126,4 +129,5 @@ subdir('convolver')
 subdir('crystalizer')
 subdir('autogain')
 subdir('adapter')
+subdir('deambiencer')
 subdir('rnnoise')

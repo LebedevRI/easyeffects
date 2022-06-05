@@ -89,6 +89,10 @@ void on_message_element(const GstBus* gst_bus, GstMessage* message, SinkInputEff
     sie->rnnoise_input_level.emit(SinkInputEffects::get_peak(message));
   } else if (std::strcmp(src_name, "rnnoise_output_level") == 0) {
     sie->rnnoise_output_level.emit(SinkInputEffects::get_peak(message));
+  } else if (std::strcmp(src_name, "rnnoise_input_level") == 0) {
+    sie->deambiencer_input_level.emit(SinkInputEffects::get_peak(message));
+  } else if (std::strcmp(src_name, "deambiencer_output_level") == 0) {
+    sie->deambiencer_output_level.emit(SinkInputEffects::get_peak(message));
   }
 }
 
@@ -211,6 +215,10 @@ SinkInputEffects::SinkInputEffects(PulseManager* pulse_manager) : PipelineBase("
   rnnoise = std::make_unique<RNNoise>(log_tag, "com.github.wwmm.pulseeffects.rnnoise",
                                       "/com/github/wwmm/pulseeffects/sinkinputs/rnnoise/");
 
+  deambiencer = std::make_unique<DeAmbiencer>(
+      log_tag, "com.github.wwmm.pulseeffects.deambiencer",
+      "/com/github/wwmm/pulseeffects/sinkinputs/deambiencer/");
+
   // doing some plugin configurations
 
   rnnoise->set_caps_out(sampling_rate);
@@ -242,6 +250,7 @@ SinkInputEffects::SinkInputEffects(PulseManager* pulse_manager) : PipelineBase("
   plugins.insert(std::make_pair(autogain->name, autogain->plugin));
   plugins.insert(std::make_pair(delay->name, delay->plugin));
   plugins.insert(std::make_pair(rnnoise->name, rnnoise->plugin));
+  plugins.insert(std::make_pair(deambiencer->name, deambiencer->plugin));
 
   add_plugins_to_pipeline();
 

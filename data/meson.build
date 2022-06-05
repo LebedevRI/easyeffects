@@ -27,7 +27,8 @@ install_data([
   'schemas/com.github.wwmm.pulseeffects.delay.gschema.xml',
   'schemas/com.github.wwmm.pulseeffects.sourceoutputs.gschema.xml',
   'schemas/com.github.wwmm.pulseeffects.webrtc.gschema.xml',
-  'schemas/com.github.wwmm.pulseeffects.rnnoise.gschema.xml'
+  'schemas/com.github.wwmm.pulseeffects.rnnoise.gschema.xml',
+  'schemas/com.github.wwmm.pulseeffects.deambiencer.gschema.xml'
 ], install_dir: schemadir)
 
 appdata_file = i18n_mod.merge_file(

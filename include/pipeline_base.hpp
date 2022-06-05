@@ -25,6 +25,7 @@
 #include <memory>
 #include <vector>
 #include "compressor.hpp"
+#include "deambiencer.hpp"
 #include "deesser.hpp"
 #include "equalizer.hpp"
 #include "filter.hpp"
@@ -76,6 +77,7 @@ class PipelineBase {
   std::unique_ptr<StereoTools> stereo_tools;
   std::unique_ptr<Maximizer> maximizer;
   std::unique_ptr<RNNoise> rnnoise;
+  std::unique_ptr<DeAmbiencer> deambiencer;
 
   std::unique_ptr<RealtimeKit> rtkit;
 
@@ -123,6 +125,8 @@ class PipelineBase {
   sigc::signal<void, std::array<double, 2>> maximizer_output_level;
   sigc::signal<void, std::array<double, 2>> rnnoise_input_level;
   sigc::signal<void, std::array<double, 2>> rnnoise_output_level;
+  sigc::signal<void, std::array<double, 2>> deambiencer_input_level;
+  sigc::signal<void, std::array<double, 2>> deambiencer_output_level;
 
  protected:
   void set_pulseaudio_props(const std::string& props) const;

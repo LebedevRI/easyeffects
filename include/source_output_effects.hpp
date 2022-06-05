@@ -20,6 +20,7 @@
 #ifndef SOURCE_OUTPUT_EFFECTS_HPP
 #define SOURCE_OUTPUT_EFFECTS_HPP
 
+#include "deambiencer.hpp"
 #include "multiband_compressor.hpp"
 #include "multiband_gate.hpp"
 #include "pipeline_base.hpp"

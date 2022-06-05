@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schemalist>
+    <schema id="com.github.wwmm.pulseeffects.deambiencer">
+        <key name="state" type="b">
+            <default>false</default>
+        </key>
+        <key name="installed" type="b">
+            <default>true</default>
+        </key>
+        <key name="post-messages" type="b">
+            <default>true</default>
+        </key>
+        <key name="input-gain" type="d">
+            <range min="-120.0" max="120.0" />
+            <default>0.0</default>
+        </key>
+        <key name="output-gain" type="d">
+            <range min="-120.0" max="120.0" />
+            <default>0.0</default>
+        </key>
+        <key name="threshold-level" type="d">
+            <range min="-1528.0" max="0.0" />
+            <default>-60.0</default>
+        </key>
+        <key name="reset" type="b">
+            <default>false</default>
+        </key>
+    </schema>
+</schemalist>

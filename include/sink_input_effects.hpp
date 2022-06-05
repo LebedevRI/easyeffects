@@ -25,6 +25,7 @@
 #include "convolver.hpp"
 #include "crossfeed.hpp"
 #include "crystalizer.hpp"
+#include "deambiencer.hpp"
 #include "delay.hpp"
 #include "exciter.hpp"
 #include "loudness.hpp"
@@ -52,6 +53,7 @@ class SinkInputEffects : public PipelineBase {
   std::unique_ptr<Crystalizer> crystalizer;
   std::unique_ptr<AutoGain> autogain;
   std::unique_ptr<Delay> delay;
+  std::unique_ptr<DeAmbiencer> deambiencer;
 
   sigc::signal<void, std::array<double, 2>> bass_enhancer_input_level;
   sigc::signal<void, std::array<double, 2>> bass_enhancer_output_level;
@@ -69,6 +71,8 @@ class SinkInputEffects : public PipelineBase {
   sigc::signal<void, std::array<double, 2>> autogain_output_level;
   sigc::signal<void, std::array<double, 2>> delay_input_level;
   sigc::signal<void, std::array<double, 2>> delay_output_level;
+  sigc::signal<void, std::array<double, 2>> deambiencer_input_level;
+  sigc::signal<void, std::array<double, 2>> deambiencer_output_level;
 
  private:
   void add_plugins_to_pipeline();

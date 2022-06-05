@@ -41,6 +41,8 @@ SourceOutputEffectsUi::SourceOutputEffectsUi(BaseObjectType* cobject,
   auto b_stereo_tools = Gtk::Builder::create_from_resource("/com/github/wwmm/pulseeffects/ui/stereo_tools.glade");
   auto b_maximizer = Gtk::Builder::create_from_resource("/com/github/wwmm/pulseeffects/ui/maximizer.glade");
   auto b_rnnoise = Gtk::Builder::create_from_resource("/com/github/wwmm/pulseeffects/ui/rnnoise.glade");
+  auto b_deambiencer = Gtk::Builder::create_from_resource(
+      "/com/github/wwmm/pulseeffects/ui/deambiencer.glade");
 
   b_limiter->get_widget_derived("widgets_grid", limiter_ui, "com.github.wwmm.pulseeffects.limiter",
                                 "/com/github/wwmm/pulseeffects/sourceoutputs/limiter/");
@@ -88,6 +90,11 @@ SourceOutputEffectsUi::SourceOutputEffectsUi(BaseObjectType* cobject,
   b_rnnoise->get_widget_derived("widgets_grid", rnnoise_ui, "com.github.wwmm.pulseeffects.rnnoise",
                                 "/com/github/wwmm/pulseeffects/sourceoutputs/rnnoise/");
 
+  b_deambiencer->get_widget_derived(
+      "widgets_grid", deambiencer_ui,
+      "com.github.wwmm.pulseeffects.deambiencer",
+      "/com/github/wwmm/pulseeffects/sourceoutputs/deambiencer/");
+
   // add to stack
 
   stack->add(*limiter_ui, limiter_ui->name);
@@ -104,6 +111,7 @@ SourceOutputEffectsUi::SourceOutputEffectsUi(BaseObjectType* cobject,
   stack->add(*stereo_tools_ui, stereo_tools_ui->name);
   stack->add(*maximizer_ui, maximizer_ui->name);
   stack->add(*rnnoise_ui, rnnoise_ui->name);
+  stack->add(*deambiencer_ui, deambiencer_ui->name);
 
   // populate listbox
 
@@ -121,6 +129,7 @@ SourceOutputEffectsUi::SourceOutputEffectsUi(BaseObjectType* cobject,
   add_to_listbox(stereo_tools_ui);
   add_to_listbox(maximizer_ui);
   add_to_listbox(rnnoise_ui);
+  add_to_listbox(deambiencer_ui);
 
   // show only mic icon before "Application" label
 
@@ -338,6 +347,13 @@ void SourceOutputEffectsUi::level_meters_connections() {
       soe->rnnoise_input_level.connect(sigc::mem_fun(*rnnoise_ui, &RNNoiseUi::on_new_input_level_db)));
   connections.emplace_back(
       soe->rnnoise_output_level.connect(sigc::mem_fun(*rnnoise_ui, &RNNoiseUi::on_new_output_level_db)));
+
+  // deambiencer level meters connections
+
+  connections.emplace_back(soe->deambiencer_input_level.connect(
+      sigc::mem_fun(*deambiencer_ui, &DeAmbiencerUi::on_new_input_level_db)));
+  connections.emplace_back(soe->deambiencer_output_level.connect(
+      sigc::mem_fun(*deambiencer_ui, &DeAmbiencerUi::on_new_output_level_db)));
 }
 
 void SourceOutputEffectsUi::up_down_connections() {
@@ -417,4 +433,10 @@ void SourceOutputEffectsUi::up_down_connections() {
 
   connections.emplace_back(rnnoise_ui->plugin_up->signal_clicked().connect([=]() { on_up(rnnoise_ui); }));
   connections.emplace_back(rnnoise_ui->plugin_down->signal_clicked().connect([=]() { on_down(rnnoise_ui); }));
+
+  connections.emplace_back(deambiencer_ui->plugin_up->signal_clicked().connect(
+      [=]() { on_up(deambiencer_ui); }));
+  connections.emplace_back(
+      deambiencer_ui->plugin_down->signal_clicked().connect(
+          [=]() { on_down(deambiencer_ui); }));
 }

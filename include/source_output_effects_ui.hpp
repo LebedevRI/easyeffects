@@ -21,6 +21,7 @@
 #define SOURCE_OUTPUT_EFFECTS_UI_HPP
 
 #include "compressor_ui.hpp"
+#include "deambiencer_ui.hpp"
 #include "deesser_ui.hpp"
 #include "effects_base_ui.hpp"
 #include "equalizer_ui.hpp"
@@ -73,6 +74,7 @@ class SourceOutputEffectsUi : public Gtk::Box, public EffectsBaseUi {
   StereoToolsUi* stereo_tools_ui = nullptr;
   MaximizerUi* maximizer_ui = nullptr;
   RNNoiseUi* rnnoise_ui = nullptr;
+  DeAmbiencerUi* deambiencer_ui = nullptr;
 
   void level_meters_connections();
   void up_down_connections();

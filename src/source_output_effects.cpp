@@ -61,6 +61,10 @@ void on_message_element(const GstBus* gst_bus, GstMessage* message, SourceOutput
     soe->rnnoise_input_level.emit(SourceOutputEffects::get_peak(message));
   } else if (std::strcmp(src_name, "rnnoise_output_level") == 0) {
     soe->rnnoise_output_level.emit(SourceOutputEffects::get_peak(message));
+  } else if (std::strcmp(src_name, "deambiencer_input_level") == 0) {
+    soe->deambiencer_input_level.emit(SourceOutputEffects::get_peak(message));
+  } else if (std::strcmp(src_name, "deambiencer_output_level") == 0) {
+    soe->deambiencer_output_level.emit(SourceOutputEffects::get_peak(message));
   }
 }
 
@@ -163,6 +167,10 @@ SourceOutputEffects::SourceOutputEffects(PulseManager* pulse_manager) : Pipeline
 
   rnnoise->set_caps_out(sampling_rate);
 
+  deambiencer = std::make_unique<DeAmbiencer>(
+      log_tag, "com.github.wwmm.pulseeffects.deambiencer",
+      "/com/github/wwmm/pulseeffects/sourceoutputs/deambiencer/");
+
   plugins.insert(std::make_pair(limiter->name, limiter->plugin));
   plugins.insert(std::make_pair(compressor->name, compressor->plugin));
   plugins.insert(std::make_pair(filter->name, filter->plugin));
@@ -177,6 +185,7 @@ SourceOutputEffects::SourceOutputEffects(PulseManager* pulse_manager) : Pipeline
   plugins.insert(std::make_pair(stereo_tools->name, stereo_tools->plugin));
   plugins.insert(std::make_pair(maximizer->name, maximizer->plugin));
   plugins.insert(std::make_pair(rnnoise->name, rnnoise->plugin));
+  plugins.insert(std::make_pair(deambiencer->name, deambiencer->plugin));
 
   add_plugins_to_pipeline();
 

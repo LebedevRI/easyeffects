@@ -32,8 +32,10 @@ PresetsManager::PresetsManager()
       user_output_dir(Glib::get_user_config_dir() + "/PulseEffects/output"),
       autoload_dir(Glib::get_user_config_dir() + "/PulseEffects/autoload"),
       settings(Gio::Settings::create("com.github.wwmm.pulseeffects")),
-      sie_settings(Gio::Settings::create("com.github.wwmm.pulseeffects.sinkinputs")),
-      soe_settings(Gio::Settings::create("com.github.wwmm.pulseeffects.sourceoutputs")),
+      sie_settings(
+          Gio::Settings::create("com.github.wwmm.pulseeffects.sinkinputs")),
+      soe_settings(
+          Gio::Settings::create("com.github.wwmm.pulseeffects.sourceoutputs")),
       limiter(std::make_unique<LimiterPreset>()),
       bass_enhancer(std::make_unique<BassEnhancerPreset>()),
       compressor(std::make_unique<CompressorPreset>()),
@@ -56,7 +58,8 @@ PresetsManager::PresetsManager()
       autogain(std::make_unique<AutoGainPreset>()),
       delay(std::make_unique<DelayPreset>()),
       rnnoise(std::make_unique<RNNoisePreset>()),
-      spectrum(std::make_unique<SpectrumPreset>()) {
+      spectrum(std::make_unique<SpectrumPreset>()),
+      deambiencer(std::make_unique<DeAmbiencerPreset>()) {
   // system presets directories provided by Glib
   for (const auto& scd : Glib::get_system_config_dirs()) {
     system_input_dir.emplace_back(scd + "/PulseEffects/input");
@@ -305,6 +308,7 @@ void PresetsManager::save(PresetType preset_type, const std::string& name) {
   autogain->write(preset_type, root);
   delay->write(preset_type, root);
   rnnoise->write(preset_type, root);
+  deambiencer->write(preset_type, root);
 
   boost::property_tree::write_json(output_file.string(), root);
 
@@ -458,6 +462,7 @@ void PresetsManager::load(PresetType preset_type, const std::string& name) {
   autogain->read(preset_type, root);
   delay->read(preset_type, root);
   rnnoise->read(preset_type, root);
+  deambiencer->read(preset_type, root);
 
   util::debug(log_tag + "loaded preset: " + input_file.string());
 }

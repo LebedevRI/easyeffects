@@ -26,6 +26,7 @@
 #include "convolver_ui.hpp"
 #include "crossfeed_ui.hpp"
 #include "crystalizer_ui.hpp"
+#include "deambiencer_ui.hpp"
 #include "deesser_ui.hpp"
 #include "delay_ui.hpp"
 #include "effects_base_ui.hpp"
@@ -88,6 +89,7 @@ class SinkInputEffectsUi : public Gtk::Box, public EffectsBaseUi {
   AutoGainUi* autogain_ui = nullptr;
   DelayUi* delay_ui = nullptr;
   RNNoiseUi* rnnoise_ui = nullptr;
+  DeAmbiencerUi* deambiencer_ui = nullptr;
 
   void level_meters_connections();
   void up_down_connections();

@@ -30,6 +30,7 @@
 #include "convolver_preset.hpp"
 #include "crossfeed_preset.hpp"
 #include "crystalizer_preset.hpp"
+#include "deambiencer_preset.hpp"
 #include "deesser_preset.hpp"
 #include "delay_preset.hpp"
 #include "equalizer_preset.hpp"
@@ -103,6 +104,7 @@ class PresetsManager {
   std::unique_ptr<DelayPreset> delay;
   std::unique_ptr<RNNoisePreset> rnnoise;
   std::unique_ptr<SpectrumPreset> spectrum;
+  std::unique_ptr<DeAmbiencerPreset> deambiencer;
 
   template <typename T>
   auto get_default(const Glib::RefPtr<Gio::Settings>& settings, const std::string& key) -> T {
